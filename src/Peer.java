@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -10,6 +11,8 @@ public class Peer {
         int portNum = 0;
         boolean isCommand = false;
         String commandPhrase = "";
+        UDPMulticastReceiver udpMulticastReceiver = null;
+        UDPMulticastSender udpMulticastSender = null;
 
         if (args.length != 1) {
             System.out.println("Port 번호를 올바르게 입력해주세요.");
@@ -50,9 +53,13 @@ public class Peer {
                         String roomName = splitedInput[1];
                         String userName = splitedInput[2];
                         SHA256 sha256 = new SHA256();
-                        String multicastAddress = sha256.getMulticastAddress(roomName);
+                        // String형의 multicastAddress를 InetAddress형으로 바꿈.
+                        InetAddress multicastAddress = InetAddress.getByName(sha256.getMulticastAddress(roomName));
                         System.out.println(multicastAddress);
-
+                        udpMulticastReceiver = new UDPMulticastReceiver(multicastAddress, portNum);
+                        udpMulticastReceiver.start();
+                        udpMulticastSender = new UDPMulticastSender(multicastAddress, portNum, userName);
+                        udpMulticastSender.start();
                 }
             }
         }
