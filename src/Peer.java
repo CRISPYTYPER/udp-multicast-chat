@@ -47,8 +47,10 @@ public class Peer {
                             System.out.println("#JOIN (참여할 채팅방의 이름) (사용자 이름)");
                             continue;
                         }
+                        String roomName = splitedInput[1];
+                        String userName = splitedInput[2];
                         SHA256 sha256 = new SHA256();
-                        String multicastAddress = sha256.getMulticastAddress(splitedInput[1]);
+                        String multicastAddress = sha256.getMulticastAddress(roomName);
                         System.out.println(multicastAddress);
 
                 }
