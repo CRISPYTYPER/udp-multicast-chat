@@ -6,7 +6,7 @@ public class UDPServer {
 
     public static void main(String args[]) throws Exception {
 
-        DatagramSocket serverSocket = new DatagramSocket(8001);
+        DatagramSocket serverSocket = new DatagramSocket(8080);
 
         byte[] receiveData = new byte[1024];
         byte[] sendData = new byte[1024];
@@ -21,7 +21,7 @@ public class UDPServer {
 
             int port = receivePacket.getPort();
 
-            String capitalizedSentence = sentence.toUpperCase() + '\0';
+            String capitalizedSentence = sentence.toUpperCase();
 
             sendData = capitalizedSentence.getBytes();
 

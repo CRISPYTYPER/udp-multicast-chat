@@ -18,7 +18,7 @@ public class UDPClient {
 //        byte로 변환
         sendData = sentence.getBytes();
 
-        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 8001);
+        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 8080);
 
         clientSocket.send(sendPacket);
 
