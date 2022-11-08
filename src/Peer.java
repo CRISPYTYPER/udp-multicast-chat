@@ -57,7 +57,7 @@ public class Peer {
                         InetAddress multicastAddress = InetAddress.getByName(sha256.getMulticastAddress(roomName));
 //                        System.out.println(multicastAddress)
                         try {
-                            udpMulticastReceiver = new UDPMulticastReceiver(multicastAddress, portNum);
+                            udpMulticastReceiver = new UDPMulticastReceiver(multicastAddress, portNum, userName);
                             udpMulticastReceiver.start();
                             udpMulticastSender = new UDPMulticastSender(multicastAddress, portNum, userName);
                             udpMulticastSender.start();

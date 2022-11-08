@@ -26,29 +26,42 @@ public class UDPMulticastSender extends Thread {
             while (true) {
                 String messageToSend = null;
                 String tempInput = bufferedReader.readLine();
-                if(tempInput.charAt(0) == '#') {
+                if (tempInput.charAt(0) == '#') {
                     if (tempInput.equals("#EXIT")) {
                         System.out.println("프로그램을 종료합니다...");
                         messageToSend = tempInput;
                         String packedMessage = userName + ": " + messageToSend;
                         // TODO 메세지 512바이트 이상일때 처리
                         System.arraycopy(packedMessage.getBytes(), 0, chunk, 0, packedMessage.getBytes().length);
-                        ;
                         datagramPacket = new DatagramPacket(chunk, chunk.length, inetAddress, portNumber);
                         datagramSocket.send(datagramPacket);
-                        break;
+                        break; // while문 나가기
                     } else {
                         System.out.println("잘못된 명령어가 입력되었습니다.");
                         System.out.println("다시 입력해주세요.");
                     }
-                }else {
+                } else {
                     messageToSend = tempInput;
                     String packedMessage = userName + ": " + messageToSend;
-                    // TODO 메세지 512바이트 이상일때 처리
-                    System.arraycopy(packedMessage.getBytes(), 0, chunk, 0, packedMessage.getBytes().length);
-                    ;
-                    datagramPacket = new DatagramPacket(chunk, chunk.length, inetAddress, portNumber);
-                    datagramSocket.send(datagramPacket);
+                    // TODO 메세지 512바이트 보다 클 때 처리
+                    if (packedMessage.getBytes().length <= 512) { // byte가 512바이트 이하이면
+                        System.arraycopy(packedMessage.getBytes(), 0, chunk, 0, packedMessage.getBytes().length);
+                        datagramPacket = new DatagramPacket(chunk, chunk.length, inetAddress, portNumber);
+                        datagramSocket.send(datagramPacket);
+                    } else {
+                        byte[] bigByteArr = new byte[packedMessage.getBytes().length]; // 512바이트보다 큰 바이트 배열을 선언한다.
+                        System.arraycopy(packedMessage.getBytes(), 0, bigByteArr, 0, packedMessage.getBytes().length);
+                        int offset = 0;
+                        datagramPacket = new DatagramPacket(bigByteArr, offset, 512, inetAddress, portNumber);
+                        int bytesSent = 0;
+                        while (bytesSent < bigByteArr.length) {
+                            datagramSocket.send(datagramPacket);
+                            bytesSent += datagramPacket.getLength();
+                            int bytesToSend = bigByteArr.length - bytesSent;
+                            int size = (bytesToSend > 512) ? 512 : bytesToSend;
+                            datagramPacket.setData(bigByteArr, bytesSent, size);
+                        }
+                    }
                 }
 
             }
@@ -60,7 +73,7 @@ public class UDPMulticastSender extends Thread {
             e.printStackTrace();
             System.exit(0);
         } finally {
-            if(!datagramSocket.isClosed())
+            if (!datagramSocket.isClosed())
                 datagramSocket.close();
         }
     }
