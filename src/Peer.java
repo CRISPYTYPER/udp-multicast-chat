@@ -64,7 +64,6 @@ public class Peer {
                             udpMulticastSender.join();
                             udpMulticastReceiver.stopThread();
                             udpMulticastReceiver.join();
-                            System.out.println("모든 쓰레드 종료");
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

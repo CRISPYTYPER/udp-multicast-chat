@@ -19,11 +19,11 @@ public class UDPMulticastSender extends Thread {
     }
 
     public void run() {
-        byte[] chunk = new byte[512];
         try {
             datagramSocket = new DatagramSocket();
             bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
+                byte[] chunk = new byte[512];
                 String messageToSend = null;
                 String tempInput = bufferedReader.readLine();
                 if (tempInput.charAt(0) == '#') {

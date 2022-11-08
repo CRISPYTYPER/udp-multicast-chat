@@ -25,13 +25,13 @@ public class UDPMulticastReceiver extends Thread {
     }
 
     public void run() {
-//        채팅 메시지를 chunk 단위(512 byte)로 나누어서 전송
-        byte[] chunk = new byte[512];
         try {
             multicastSocket = new MulticastSocket(portNumber);
             multicastSocket.joinGroup(inetAddress);
             while (true) {
                 if (exitThread) break;
+                //        채팅 메시지를 chunk 단위(512 byte)로 나누어서 수신
+                byte[] chunk = new byte[512];
                 datagramPacket = new DatagramPacket(chunk, chunk.length);
                 multicastSocket.receive(datagramPacket);
                 String receivedMessage = new String(datagramPacket.getData()).trim();
