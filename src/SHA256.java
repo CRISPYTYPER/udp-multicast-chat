@@ -10,7 +10,6 @@ public class SHA256 {
         return bytesToMulticastAddress(md.digest());
     }
 
-
     private String bytesToMulticastAddress(byte[] bytes) {
         //225.x.y.z 로 변환 후 리턴
         StringBuilder stringBuilder = new StringBuilder();

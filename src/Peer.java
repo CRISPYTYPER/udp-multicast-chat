@@ -19,28 +19,25 @@ public class Peer {
         } else {
             portNum = Integer.parseInt(args[0]);
         }
-//        System.out.println(portNum);
 
         String inputString;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("#JOIN (참여할 채팅방의 이름) (사용자 이름)");
         while ((inputString = reader.readLine()) != null) {
             reader = new BufferedReader(new InputStreamReader(System.in));
-//            System.out.println(inputString);
-//        System.out.println(inputString.charAt(0));
 //            아무 입력 안받으면 다시 입력 받기
             if (inputString.length() == 0) {
                 continue;
             }
             String[] splitedInput = inputString.split(" ");
-//            System.out.println(splitedInput.length);
-//        System.out.println(Arrays.toString(splitedInput));
+
 //            '#'확인되면 isCommand flag true로 바꾸기
             isCommand = (splitedInput[0].charAt(0) == '#') ? true : false;
-//            System.out.println(isCommand);
+
             if (isCommand == true) {
 //                commandPhrase는 #지운 명령어 자체(e.g. #JOIN -> JOIN)
                 commandPhrase = splitedInput[0].substring(1);
-//                System.out.println(commandPhrase);
+
                 switch (commandPhrase) {
                     case "JOIN":
                         // TODO JOIN 입력 받았을 때 처리하기
@@ -55,7 +52,7 @@ public class Peer {
                         SHA256 sha256 = new SHA256();
                         // String형의 multicastAddress를 InetAddress형으로 바꿈.
                         InetAddress multicastAddress = InetAddress.getByName(sha256.getMulticastAddress(roomName));
-//                        System.out.println(multicastAddress)
+
                         try {
                             udpMulticastReceiver = new UDPMulticastReceiver(multicastAddress, portNum, userName);
                             udpMulticastReceiver.start();

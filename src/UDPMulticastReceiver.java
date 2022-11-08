@@ -10,7 +10,7 @@ public class UDPMulticastReceiver extends Thread {
     private DatagramPacket datagramPacket = null;
     private String userName = null;
 
-    private boolean exitThread = true;
+    private boolean exitThread;
 
 
     public UDPMulticastReceiver(InetAddress inputInetAddress, int inputPortNum, String inputUserName) {

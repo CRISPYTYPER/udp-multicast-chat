@@ -28,7 +28,7 @@ public class UDPMulticastSender extends Thread {
                 String tempInput = bufferedReader.readLine();
                 if (tempInput.charAt(0) == '#') {
                     if (tempInput.equals("#EXIT")) {
-                        System.out.println("프로그램을 종료합니다...");
+                        System.out.println("이 채팅방을 나갑니다...");
                         messageToSend = tempInput;
                         String packedMessage = userName + ": " + messageToSend;
                         // TODO 메세지 512바이트 이상일때 처리
@@ -43,12 +43,11 @@ public class UDPMulticastSender extends Thread {
                 } else {
                     messageToSend = tempInput;
                     String packedMessage = userName + ": " + messageToSend;
-                    // TODO 메세지 512바이트 보다 클 때 처리
                     if (packedMessage.getBytes().length <= 512) { // byte가 512바이트 이하이면
                         System.arraycopy(packedMessage.getBytes(), 0, chunk, 0, packedMessage.getBytes().length);
                         datagramPacket = new DatagramPacket(chunk, chunk.length, inetAddress, portNumber);
                         datagramSocket.send(datagramPacket);
-                    } else {
+                    } else { // 512바이트 보다 큰 배열이면
                         byte[] bigByteArr = new byte[packedMessage.getBytes().length]; // 512바이트보다 큰 바이트 배열을 선언한다.
                         System.arraycopy(packedMessage.getBytes(), 0, bigByteArr, 0, packedMessage.getBytes().length);
                         int offset = 0;
@@ -63,9 +62,7 @@ public class UDPMulticastSender extends Thread {
                         }
                     }
                 }
-
             }
-
         } catch (SocketException e) {
             e.printStackTrace();
             System.exit(0);
