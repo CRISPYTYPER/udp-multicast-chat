@@ -62,6 +62,7 @@ public class Peer {
                             udpMulticastSender = new UDPMulticastSender(multicastAddress, portNum, userName);
                             udpMulticastSender.start();
                             udpMulticastSender.join();
+                            udpMulticastReceiver.stopThread();
                             udpMulticastReceiver.join();
                             System.out.println("모든 쓰레드 종료");
                         } catch (Exception e) {

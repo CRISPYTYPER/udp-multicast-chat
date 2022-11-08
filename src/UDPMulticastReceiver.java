@@ -10,11 +10,18 @@ public class UDPMulticastReceiver extends Thread {
     private DatagramPacket datagramPacket = null;
     private String userName = null;
 
+    private boolean exitThread = true;
+
 
     public UDPMulticastReceiver(InetAddress inputInetAddress, int inputPortNum, String inputUserName) {
         inetAddress = inputInetAddress;
         portNumber = inputPortNum;
         userName = inputUserName;
+        exitThread = false;
+    }
+
+    public void stopThread() {
+        exitThread = true;
     }
 
     public void run() {
@@ -24,6 +31,7 @@ public class UDPMulticastReceiver extends Thread {
             multicastSocket = new MulticastSocket(portNumber);
             multicastSocket.joinGroup(inetAddress);
             while (true) {
+                if (exitThread) break;
                 datagramPacket = new DatagramPacket(chunk, chunk.length);
                 multicastSocket.receive(datagramPacket);
                 String receivedMessage = new String(datagramPacket.getData()).trim();
@@ -35,10 +43,6 @@ public class UDPMulticastReceiver extends Thread {
                     sendedContent = colonDivided[1].strip();
                     if (sendedContent.equals("#EXIT")) {
                         System.out.println("-- " + senderName + " 님이 채팅을 종료하셨습니다. --");
-                        if (userName.equals(senderName)) {
-                            System.out.println("리시버 프로세스 종료");
-                            break;
-                        }
                     } else {
                         System.out.println(receivedMessage);
                     }
@@ -50,8 +54,9 @@ public class UDPMulticastReceiver extends Thread {
             e.printStackTrace();
             System.exit(0);
         } finally {
-            if (!multicastSocket.isClosed())
+            if (!multicastSocket.isClosed()) {
                 multicastSocket.close();
+            }
         }
     }
 
