@@ -22,7 +22,7 @@ public class Peer {
 
         String inputString;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("#JOIN (참여할 채팅방의 이름) (사용자 이름)");
+        System.out.println("채팅방 입장 방법: #JOIN (참여할 채팅방의 이름) (사용자 이름)");
         while ((inputString = reader.readLine()) != null) {
             reader = new BufferedReader(new InputStreamReader(System.in));
 //            아무 입력 안받으면 다시 입력 받기
@@ -56,7 +56,7 @@ public class Peer {
                         try {
                             udpMulticastReceiver = new UDPMulticastReceiver(multicastAddress, portNum, userName);
                             udpMulticastReceiver.start();
-                            udpMulticastSender = new UDPMulticastSender(multicastAddress, portNum, userName);
+                            udpMulticastSender = new UDPMulticastSender(multicastAddress, portNum, userName, roomName);
                             udpMulticastSender.start();
                             udpMulticastSender.join();
                             udpMulticastReceiver.stopThread();

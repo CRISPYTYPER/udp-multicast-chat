@@ -8,17 +8,20 @@ public class UDPMulticastSender extends Thread {
     private InetAddress inetAddress = null;
     private int portNumber = 0;
     private String userName = "";
+    private String roomName = "";
     private DatagramSocket datagramSocket = null;
     private DatagramPacket datagramPacket = null;
 
 
-    public UDPMulticastSender(InetAddress inputInetAddress, int inputPortNum, String inputUserName) {
+    public UDPMulticastSender(InetAddress inputInetAddress, int inputPortNum, String inputUserName, String inputRoomName) {
         inetAddress = inputInetAddress;
         portNumber = inputPortNum;
         userName = inputUserName;
+        roomName = inputRoomName;
     }
 
     public void run() {
+        System.out.println(roomName + " 채팅방에 입장하였습니다!");
         try {
             datagramSocket = new DatagramSocket();
             bufferedReader = new BufferedReader(new InputStreamReader(System.in));
