@@ -40,7 +40,7 @@ public class Peer {
 
                 switch (commandPhrase) {
                     case "JOIN":
-                        // TODO JOIN 입력 받았을 때 처리하기
+
                         // 인풋 다음과 같이 받음. #JOIN (참여할 채팅방의 이름) (사용자 이름)
                         if (splitedInput.length != 3) {
                             System.out.println("ERROR! 다음과 같은 형식으로 입력해주세요.");
@@ -65,6 +65,8 @@ public class Peer {
                             e.printStackTrace();
                         }
                 }
+            } else {
+                System.out.println("ERROR! 올바른 명령어를 입력해주세요.");
             }
         }
     }

@@ -34,7 +34,6 @@ public class UDPMulticastSender extends Thread {
                         System.out.println("이 채팅방을 나갑니다...");
                         messageToSend = tempInput;
                         String packedMessage = userName + ": " + messageToSend;
-                        // TODO 메세지 512바이트 이상일때 처리
                         System.arraycopy(packedMessage.getBytes(), 0, chunk, 0, packedMessage.getBytes().length);
                         datagramPacket = new DatagramPacket(chunk, chunk.length, inetAddress, portNumber);
                         datagramSocket.send(datagramPacket);
