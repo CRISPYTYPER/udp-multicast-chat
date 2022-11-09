@@ -42,7 +42,7 @@ public class UDPMulticastSender extends Thread {
                         System.out.println("잘못된 명령어가 입력되었습니다.");
                         System.out.println("다시 입력해주세요.");
                     }
-                } else {
+                } else { // 명령어 입력이 아닌 메시지 입력의 경우 처리
                     messageToSend = tempInput;
                     String packedMessage = userName + ": " + messageToSend;
                     if (packedMessage.getBytes().length <= 512) { // byte가 512바이트 이하이면

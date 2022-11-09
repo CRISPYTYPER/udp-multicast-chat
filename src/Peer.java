@@ -52,7 +52,6 @@ public class Peer {
                         SHA256 sha256 = new SHA256();
                         // String형의 multicastAddress를 InetAddress형으로 바꿈.
                         InetAddress multicastAddress = InetAddress.getByName(sha256.getMulticastAddress(roomName));
-
                         try {
                             udpMulticastReceiver = new UDPMulticastReceiver(multicastAddress, portNum, userName);
                             udpMulticastReceiver.start();

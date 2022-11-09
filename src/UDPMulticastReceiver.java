@@ -36,7 +36,7 @@ public class UDPMulticastReceiver extends Thread {
                 multicastSocket.receive(datagramPacket);
                 String receivedMessage = new String(datagramPacket.getData()).trim();
                 String[] colonDivided = receivedMessage.split(":");
-                if (colonDivided.length > 1) {
+                if (colonDivided.length == 2) {
                     String senderName;
                     String sendedContent;
                     senderName = colonDivided[0].strip();
@@ -46,7 +46,7 @@ public class UDPMulticastReceiver extends Thread {
                     } else {
                         System.out.println(receivedMessage);
                     }
-                } else {
+                } else { // 512바이트 초과인 데이터의 첫 번째 chunk를 제외한 나머지 부분이 들어오는 경우
                     System.out.println(receivedMessage);
                 }
             }
