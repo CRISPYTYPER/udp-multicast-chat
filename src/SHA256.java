@@ -16,13 +16,10 @@ public class SHA256 {
         int lengthOfBytes = bytes.length;
         stringBuilder.append("225.");
         for (int i = 0; i < 3; i++) {
-//            System.out.printf("%02x\n", bytes[lengthOfBytes-3+i]);
             stringBuilder.append(Byte.toUnsignedInt(bytes[lengthOfBytes-3+i]));
             stringBuilder.append(".");
         }
-//        System.out.println(stringBuilder);
         String multicastAddress = stringBuilder.substring(0,stringBuilder.length()-1);
-//        System.out.println(multicastAddress);
         return multicastAddress;
     }
 
